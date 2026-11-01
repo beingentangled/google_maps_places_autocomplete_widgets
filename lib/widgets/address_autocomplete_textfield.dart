@@ -2,7 +2,7 @@ library;
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_places_autocomplete_widgets/api/autocomplete_types.dart';
 import 'package:uuid/uuid.dart';
@@ -99,7 +99,8 @@ class AddressAutocompleteTextField extends AddresssAutocompleteStatefulWidget {
   /// (This has now been deprecated and replaced with [type] parameter `type:AutoCompleteType.postalCode`).
   @override
   @Deprecated(
-      "If passing true use `type:AutoCompleteType.postalCode` instead. (false == passing `type:AutoCompleteType.address`")
+    "If passing true use `type:AutoCompleteType.postalCode` instead. (false == passing `type:AutoCompleteType.address`",
+  )
   final bool? postalCodeLookup;
 
   /// Single AutoCompleteType enum for type of information to autocomplete
@@ -229,12 +230,13 @@ class AddressAutocompleteTextField extends AddresssAutocompleteStatefulWidget {
     this.maxLengthEnforcement,
     this.onChanged,
   }) : assert(
-            (postalCodeLookup == true && type == null && types == null) ||
-                (postalCodeLookup == false && type == null && types == null) ||
-                (postalCodeLookup == null && type == null && types == null) ||
-                (postalCodeLookup == null && type != null && types == null) ||
-                (postalCodeLookup == null && type == null && types != null),
-            'You can only supply value for [type], [types] (or deprecated `postalCodeLookup`).  No combinations allowed');
+         (postalCodeLookup == true && type == null && types == null) ||
+             (postalCodeLookup == false && type == null && types == null) ||
+             (postalCodeLookup == null && type == null && types == null) ||
+             (postalCodeLookup == null && type != null && types == null) ||
+             (postalCodeLookup == null && type == null && types != null),
+         'You can only supply value for [type], [types] (or deprecated `postalCodeLookup`).  No combinations allowed',
+       );
 
   @override
   State<StatefulWidget> createState() => _AddressAutocompleteTextFieldState();

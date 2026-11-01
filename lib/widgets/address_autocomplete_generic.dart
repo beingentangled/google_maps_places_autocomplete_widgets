@@ -4,7 +4,7 @@ library;
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_places_autocomplete_widgets/api/autocomplete_types.dart';
 
@@ -39,7 +39,7 @@ abstract class AddresssAutocompleteStatefulWidget extends StatefulWidget {
   ///Callback triggered when a
   /// item is selected
   abstract final String? Function(Place place)?
-      onSuggestionClickGetTextToUseForControl;
+  onSuggestionClickGetTextToUseForControl;
 
   ///your maps api key, must not be null
   abstract final String mapsApiKey;
@@ -78,7 +78,8 @@ abstract class AddresssAutocompleteStatefulWidget extends StatefulWidget {
   /// (deprecated) PostalCode lookup instead of address lookup (defaults to false)
   /// (This has now been deprecated and replaced with [type] parameter `type:AutoCompleteType.postalCode`).
   @Deprecated(
-      "If passing true use `type:AutoCompleteType.postalCode` instead. (false == passing `type:AutoCompleteType.address`")
+    "If passing true use `type:AutoCompleteType.postalCode` instead. (false == passing `type:AutoCompleteType.address`",
+  )
   abstract final bool? postalCodeLookup;
 
   /// Single AutoCompleteType enum for type of information to autocomplete
@@ -134,7 +135,8 @@ abstract class OverlaySuggestionDetails {
 }
 
 mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
-    on State<T> implements OverlaySuggestionDetails {
+    on State<T>
+    implements OverlaySuggestionDetails {
   @override
   void initState() {
     debugPrint('SuggestionOverlayMixin init() called!!!!');
@@ -143,8 +145,12 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
         widget.controller ?? TextEditingController(text: widget.initialValue);
     focusNode = widget.focusNode ?? FocusNode();
 
-    addressService = AddressService(sessionToken, widget.mapsApiKey,
-        widget.componentCountry, widget.language);
+    addressService = AddressService(
+      sessionToken,
+      widget.mapsApiKey,
+      widget.componentCountry,
+      widget.language,
+    );
 
     focusNode.addListener(showOrHideOverlayOnFocusChange);
   }
@@ -183,14 +189,16 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
         final RenderBox renderBox = context.findRenderObject() as RenderBox;
         final size = renderBox.size;
         entry = OverlayEntry(
-            builder: (overlayBuildContext) => Positioned(
-                  width: size.width,
-                  child: CompositedTransformFollower(
-                      link: layerLink,
-                      showWhenUnlinked: false,
-                      offset: Offset(0, size.height + widget.overlayOffset),
-                      child: buildOverlay()),
-                ));
+          builder: (overlayBuildContext) => Positioned(
+            width: size.width,
+            child: CompositedTransformFollower(
+              link: layerLink,
+              showWhenUnlinked: false,
+              offset: Offset(0, size.height + widget.overlayOffset),
+              child: buildOverlay(),
+            ),
+          ),
+        );
         overlay.insert(entry!);
       }
     }
@@ -201,7 +209,8 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
       entry?.remove();
       entry = null;
       debugPrint(
-          'hideOverlay suggestionHasBeenSelected=$suggestionHasBeenSelected');
+        'hideOverlay suggestionHasBeenSelected=$suggestionHasBeenSelected',
+      );
       if (!suggestionHasBeenSelected) {
         triggerNoSuggestionCallback();
       }
@@ -254,7 +263,7 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
               if (widget.onSuggestionClickGetTextToUseForControl != null) {
                 controller?.text =
                     widget.onSuggestionClickGetTextToUseForControl!(place) ??
-                        '';
+                    '';
               } else {
                 // default to full formatted address
                 controller?.text = place.formattedAddress ?? '';
@@ -273,25 +282,27 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
   }
 
   Widget buildOverlay() => TextFieldTapRegion(
-      child: Material(
-          color: widget.suggestionsOverlayDecoration != null
-              ? Colors.transparent
-              : Colors.white,
-          elevation: widget.elevation ?? 0,
-          child: Container(
-            decoration:
-                widget.suggestionsOverlayDecoration ?? const BoxDecoration(),
-            child: Column(
-              children: [
-                buildListViewerBuilder, //...buildList(),
-                if (widget.showGoogleTradeMark)
-                  const Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: Text('powered by google'),
-                  )
-              ],
-            ),
-          )));
+    child: Material(
+      color: widget.suggestionsOverlayDecoration != null
+          ? Colors.transparent
+          : Colors.white,
+      elevation: widget.elevation ?? 0,
+      child: Container(
+        decoration:
+            widget.suggestionsOverlayDecoration ?? const BoxDecoration(),
+        child: Column(
+          children: [
+            buildListViewerBuilder, //...buildList(),
+            if (widget.showGoogleTradeMark)
+              const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: Text('powered by google'),
+              ),
+          ],
+        ),
+      ),
+    ),
+  );
 
   String _lastText = '';
   Future<void> searchAddress(String text) async {
@@ -300,38 +311,40 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
     }
     if (text != _lastText && text.isNotEmpty) {
       assert(
-          (widget.postalCodeLookup == true &&
-                  widget.type == null &&
-                  widget.types == null) ||
-              (widget.postalCodeLookup == false &&
-                  widget.type == null &&
-                  widget.types == null) ||
-              (widget.postalCodeLookup == null &&
-                  widget.type == null &&
-                  widget.types == null) ||
-              (widget.postalCodeLookup == null &&
-                  widget.type != null &&
-                  widget.types == null) ||
-              (widget.postalCodeLookup == null &&
-                  widget.type == null &&
-                  widget.types != null),
-          'You can only supply value for [type], [types] (or deprecated `postalCodeLookup`).  No combinations allowed');
+        (widget.postalCodeLookup == true &&
+                widget.type == null &&
+                widget.types == null) ||
+            (widget.postalCodeLookup == false &&
+                widget.type == null &&
+                widget.types == null) ||
+            (widget.postalCodeLookup == null &&
+                widget.type == null &&
+                widget.types == null) ||
+            (widget.postalCodeLookup == null &&
+                widget.type != null &&
+                widget.types == null) ||
+            (widget.postalCodeLookup == null &&
+                widget.type == null &&
+                widget.types != null),
+        'You can only supply value for [type], [types] (or deprecated `postalCodeLookup`).  No combinations allowed',
+      );
 
       _lastText = text;
-      suggestions = await addressService.search(text,
-          includeFullSuggestionDetails:
-              (widget.onInitialSuggestionClick != null),
-          types: [
-            if (widget.postalCodeLookup == true)
-              AutoCompleteType.postalCode
-            else if (widget.postalCodeLookup == false ||
-                (widget.type == null && widget.types == null))
-              AutoCompleteType.address
-            else if (widget.type != null)
-              widget.type!
-            else if (widget.types != null)
-              ...widget.types!
-          ]);
+      suggestions = await addressService.search(
+        text,
+        includeFullSuggestionDetails: (widget.onInitialSuggestionClick != null),
+        types: [
+          if (widget.postalCodeLookup == true)
+            AutoCompleteType.postalCode
+          else if (widget.postalCodeLookup == false ||
+              (widget.type == null && widget.types == null))
+            AutoCompleteType.address
+          else if (widget.type != null)
+            widget.type!
+          else if (widget.types != null)
+            ...widget.types!,
+        ],
+      );
     }
     if (entry != null) {
       entry!.markNeedsBuild();
@@ -342,10 +355,11 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
     if (widget.decoration != null) {
       if (widget.clearButton != null) {
         return widget.decoration!.copyWith(
-            suffixIcon: IconButton(
-          icon: widget.clearButton!,
-          onPressed: _clearText,
-        ));
+          suffixIcon: IconButton(
+            icon: widget.clearButton!,
+            onPressed: _clearText,
+          ),
+        );
       }
       return widget.decoration!;
     }
@@ -354,22 +368,25 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
 
   void onTextChanges(text) async {
     if (debounceTimer?.isActive ?? false) debounceTimer!.cancel();
-    debounceTimer =
-        Timer(Duration(milliseconds: widget.debounceTime), () async {
-      await searchAddress(text);
-      if (widget.onChanged != null) {
-        widget.onChanged!(text);
-      }
-    });
+    debounceTimer = Timer(
+      Duration(milliseconds: widget.debounceTime),
+      () async {
+        await searchAddress(text);
+        if (widget.onChanged != null) {
+          widget.onChanged!(text);
+        }
+      },
+    );
   }
 
   /// Provides default implementation of Suggestion list item builder
   Widget defaultItemBuilder(Suggestion suggestion, int index) {
     return Container(
-        margin: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-        padding: const EdgeInsets.all(8),
-        alignment: Alignment.centerLeft,
-        color: Colors.white,
-        child: Text(suggestion.description));
+      margin: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+      padding: const EdgeInsets.all(8),
+      alignment: Alignment.centerLeft,
+      color: Colors.white,
+      child: Text(suggestion.description),
+    );
   }
 }

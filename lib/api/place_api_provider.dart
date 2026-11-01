@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
+
+import 'package:material_ui/material_ui.dart';
 import 'package:google_maps_places_autocomplete_widgets/api/autocomplete_types.dart';
 import 'package:http/http.dart';
 
@@ -31,14 +32,18 @@ class PlaceApiProvider {
   final client = Client();
 
   PlaceApiProvider(
-      this.sessionToken, this.mapsApiKey, this.compomentCountry, this.language);
+    this.sessionToken,
+    this.mapsApiKey,
+    this.compomentCountry,
+    this.language,
+  );
 
   final String sessionToken;
   final String mapsApiKey;
   final String? compomentCountry;
   final String? language;
 
-/* Example JSON returned from Places autocomplete suggestions API request
+  /* Example JSON returned from Places autocomplete suggestions API request
     (ie.
       host: 'maps.googleapis.com',
         path: '/maps/api/place/autocomplete/json', )
@@ -102,44 +107,50 @@ result["predictions"] =
   ///   (This is sent as true when the `onInitialSuggestionClick` is in use)
   ///[postalCodeLookup] if we should request `postal_code` type return information
   ///   instead of address type information.
-  Future<List<Suggestion>> fetchSuggestions(String input,
-      {bool includeFullSuggestionDetails = false,
-      required List<AutoCompleteType> types}) async {
+  Future<List<Suggestion>> fetchSuggestions(
+    String input, {
+    bool includeFullSuggestionDetails = false,
+    required List<AutoCompleteType> types,
+  }) async {
     /// OK, we need to check the types array..
     String typesString = '';
     for (final type in types) {
       if (type.onlySingleValueAllowed && types.length > 1) {
         throw Exception(
-            'If $type is specified then it is the ONLY autocomplete type allowed by Google Places. See https://developers.google.com/maps/documentation/places/web-service/autocomplete#types');
+          'If $type is specified then it is the ONLY autocomplete type allowed by Google Places. See https://developers.google.com/maps/documentation/places/web-service/autocomplete#types',
+        );
       }
       if (typesString.isNotEmpty) typesString += '|';
       typesString += type.typeString;
     }
     if (types.length > 5) {
       throw Exception(
-          'A maximum of 5 autocomplete types are allowed by Google Places. See https://developers.google.com/maps/documentation/places/web-service/autocomplete#types');
+        'A maximum of 5 autocomplete types are allowed by Google Places. See https://developers.google.com/maps/documentation/places/web-service/autocomplete#types',
+      );
     }
 
     final Map<String, dynamic> parameters = <String, dynamic>{
       'input': input,
       'types': typesString,
       'key': mapsApiKey,
-      'sessiontoken': sessionToken
+      'sessiontoken': sessionToken,
     };
 
     if (language != null) {
       parameters.addAll(<String, dynamic>{'language': language});
     }
     if (compomentCountry != null) {
-      parameters
-          .addAll(<String, dynamic>{'components': 'country:$compomentCountry'});
+      parameters.addAll(<String, dynamic>{
+        'components': 'country:$compomentCountry',
+      });
     }
 
     final Uri request = Uri(
-        scheme: 'https',
-        host: 'maps.googleapis.com',
-        path: '/maps/api/place/autocomplete/json',
-        queryParameters: parameters);
+      scheme: 'https',
+      host: 'maps.googleapis.com',
+      path: '/maps/api/place/autocomplete/json',
+      queryParameters: parameters,
+    );
 
     final response = await client.get(request);
 
@@ -147,8 +158,10 @@ result["predictions"] =
       final result = json.decode(response.body);
       if (result['status'] == 'OK') {
         if (debugJson) {
-          printJson(result['predictions'],
-              title: 'GOOGLE MAP API RETURN VALUE result["predictions"]');
+          printJson(
+            result['predictions'],
+            title: 'GOOGLE MAP API RETURN VALUE result["predictions"]',
+          );
         }
 
         // compose suggestions in a list
@@ -160,14 +173,18 @@ result["predictions"] =
             final terms = p['terms']
                 .map<String>((term) => term['value'] as String)
                 .toList();
-            final types =
-                p['types'].map<String>((atype) => atype as String).toList();
+            final types = p['types']
+                .map<String>((atype) => atype as String)
+                .toList();
 
-            return Suggestion(p['place_id'], p['description'],
-                mainText: mainText,
-                secondaryText: secondaryText,
-                terms: terms,
-                types: types);
+            return Suggestion(
+              p['place_id'],
+              p['description'],
+              mainText: mainText,
+              secondaryText: secondaryText,
+              terms: terms,
+              types: types,
+            );
           } else {
             // just use the simple Suggestion parts we need
             return Suggestion(p['place_id'], p['description']);
@@ -288,17 +305,17 @@ result["result"]
       'place_id': placeId,
       'fields': 'name,formatted_address,address_component,geometry',
       'key': mapsApiKey,
-      'sessiontoken': sessionToken
+      'sessiontoken': sessionToken,
     };
     final Uri request = Uri(
-        scheme: 'https',
-        host: 'maps.googleapis.com',
-        path: '/maps/api/place/details/json',
+      scheme: 'https',
+      host: 'maps.googleapis.com',
+      path: '/maps/api/place/details/json',
 
-        //PlaceApiNew     host: 'places.googleapis.com',
-        //PlaceApiNew     path: '/v1/places/$placeId',
-
-        queryParameters: parameters);
+      //PlaceApiNew     host: 'places.googleapis.com',
+      //PlaceApiNew     path: '/v1/places/$placeId',
+      queryParameters: parameters,
+    );
 
     if (debugJson) {
       debugPrint(request.toString());
@@ -316,8 +333,10 @@ result["result"]
       final result = json.decode(response.body);
       if (result['status'] == 'OK') {
         if (debugJson) {
-          printJson(result['result'],
-              title: 'GOOGLE MAP API RETURN VALUE result["result"]');
+          printJson(
+            result['result'],
+            title: 'GOOGLE MAP API RETURN VALUE result["result"]',
+          );
         }
         final components =
             result['result']['address_components'] as List<dynamic>;

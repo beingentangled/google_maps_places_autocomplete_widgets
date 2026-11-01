@@ -2,7 +2,7 @@ library;
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_places_autocomplete_widgets/api/autocomplete_types.dart';
 import 'package:uuid/uuid.dart';
@@ -16,7 +16,8 @@ export 'package:google_maps_places_autocomplete_widgets/model/place.dart';
 export 'package:google_maps_places_autocomplete_widgets/model/suggestion.dart';
 
 typedef ReportValidationFailureAndRequestFocusCallback = bool Function(
-    String errorMessageForThisFailedValidation);
+  String errorMessageForThisFailedValidation,
+);
 
 class AddressAutocompleteTextFormField
     extends AddresssAutocompleteStatefulWidget {
@@ -97,9 +98,10 @@ class AddressAutocompleteTextFormField
 
   /// (deprecated) PostalCode lookup instead of address lookup (defaults to false)
   /// (This has now been deprecated and replaced with [type] parameter `type:AutoCompleteType.postalCode`).
-  @override 
+  @override
   @Deprecated(
-      "If passing true use `type:AutoCompleteType.postalCode` instead. (false == passing `type:AutoCompleteType.address`")
+    "If passing true use `type:AutoCompleteType.postalCode` instead. (false == passing `type:AutoCompleteType.address`",
+  )
   final bool? postalCodeLookup;
 
   /// Single AutoCompleteType enum for type of information to autocomplete
@@ -134,7 +136,7 @@ class AddressAutocompleteTextFormField
   final Key? textFormFieldKey;
 
   final ReportValidationFailureAndRequestFocusCallback?
-      reportValidationFailAndRequestFocus;
+  reportValidationFailAndRequestFocus;
 
   // These correspond to arguments supported by standard Flutter TextFormField
   @override
@@ -302,12 +304,13 @@ class AddressAutocompleteTextFormField
     this.mouseCursor,
     this.contextMenuBuilder,
   }) : assert(
-            (postalCodeLookup == true && type == null && types == null) ||
-                (postalCodeLookup == false && type == null && types == null) ||
-                (postalCodeLookup == null && type == null && types == null) ||
-                (postalCodeLookup == null && type != null && types == null) ||
-                (postalCodeLookup == null && type == null && types != null),
-            'You can only supply value for [type], [types] (or deprecated `postalCodeLookup`).  No combinations allowed');
+         (postalCodeLookup == true && type == null && types == null) ||
+             (postalCodeLookup == false && type == null && types == null) ||
+             (postalCodeLookup == null && type == null && types == null) ||
+             (postalCodeLookup == null && type != null && types == null) ||
+             (postalCodeLookup == null && type == null && types != null),
+         'You can only supply value for [type], [types] (or deprecated `postalCodeLookup`).  No combinations allowed',
+       );
 
   @override
   State<StatefulWidget> createState() =>
@@ -347,8 +350,9 @@ class _AddressAutocompleteTextFormFieldState
     // focus, instead of the last.
     bool focusRequestedAlready = false;
     if (widget.reportValidationFailAndRequestFocus != null) {
-      focusRequestedAlready =
-          widget.reportValidationFailAndRequestFocus!.call(validationErrorMsg);
+      focusRequestedAlready = widget.reportValidationFailAndRequestFocus!.call(
+        validationErrorMsg,
+      );
     }
     if (!focusRequestedAlready) {
       focusNode.requestFocus();

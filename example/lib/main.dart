@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
+
 import '/privatekeys.dart';
 
 void main() {
@@ -16,9 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Google Address AutoComplete Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -30,9 +29,11 @@ class MyApp extends StatelessWidget {
               ],
             ),
             title: const Center(
-                child: Text('Google_Map_Places_AutoComplete_Widgets Demo',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+              child: Text(
+                'Google_Map_Places_AutoComplete_Widgets Demo',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
           body: const TabBarView(
             children: [
@@ -114,8 +115,8 @@ class _AddressAutocompleteTextFieldExampleState
       // clear these until they are loaded...
       _name = _formattedAddress = _formattedAddressZipPlus4 = _streetAddress =
           _streetNumber = _street = _streetShort = _city = _county = _state =
-              _stateShort = _zipCode = _zipCodeSuffix =
-                  _zipCodePlus4 = _country = _vicinity = '....';
+              _stateShort = _zipCode = _zipCodeSuffix = _zipCodePlus4 =
+                  _country = _vicinity = '....';
       _lat = _lng = 0.0;
     });
   }
@@ -165,9 +166,10 @@ class _AddressAutocompleteTextFieldExampleState
                   maxLength: 5,
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   style: const TextStyle(
-                      color: Colors.purple,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.purple,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                   // create a `privatekeys.dart` file and add your API key there
                   //   `const GOOGLE_MAPS_ACCOUNT_API_KEY = 'YourGoogleMapsApiKey_XXXXyyyzzzz';`
                   // the .gitignore file is set so this does not go into source repository.
@@ -186,20 +188,24 @@ class _AddressAutocompleteTextFieldExampleState
                     // you should invalidate the last entry of onSuggestionClick if you really need a valid location,
                     // otherwise decide what to do based on what the user typed, can be an empty string
                     debugPrint(
-                        'onFinishedEditingWithNoSuggestion()  text typed: $text');
+                      'onFinishedEditingWithNoSuggestion()  text typed: $text',
+                    );
                   },
                   buildItem: (Suggestion suggestion, int index) {
                     return Container(
-                        margin: const EdgeInsets.fromLTRB(2, 2, 2,
-                            2), //<<This area will get hoverColor/selectionColor on desktop
-                        padding: const EdgeInsets.all(8),
-                        alignment: Alignment.centerLeft,
-                        color: const Color.fromARGB(255, 220, 220, 220),
-                        child: Text(suggestion.description,
-                            style: const TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold)));
+                      margin: const EdgeInsets.fromLTRB(2, 2, 2, 2), //<<This area will get hoverColor/selectionColor on desktop
+                      padding: const EdgeInsets.all(8),
+                      alignment: Alignment.centerLeft,
+                      color: const Color.fromARGB(255, 220, 220, 220),
+                      child: Text(
+                        suggestion.description,
+                        style: const TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
                   },
                   clearButton: const Icon(Icons.close),
                   componentCountry: 'us',
@@ -207,7 +213,8 @@ class _AddressAutocompleteTextFieldExampleState
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.all(8),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white)),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     hintText: 'Enter Zipcode to lookup',
                     //errorText: 'Zip code must be 5 digits max',
                     //errorStyle: TextStyle(color:Colors.red),
@@ -223,9 +230,10 @@ class _AddressAutocompleteTextFieldExampleState
                   type: AutoCompleteType.cities,
                   keyboardType: TextInputType.name,
                   style: const TextStyle(
-                      color: Colors.orange,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.orange,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                   // create a `privatekeys.dart` file and add your API key there
                   //   `const GOOGLE_MAPS_ACCOUNT_API_KEY = 'YourGoogleMapsApiKey_XXXXyyyzzzz';`
                   // the .gitignore file is set so this does not go into source repository.
@@ -244,20 +252,24 @@ class _AddressAutocompleteTextFieldExampleState
                     // you should invalidate the last entry of onSuggestionClick if you really need a valid location,
                     // otherwise decide what to do based on what the user typed, can be an empty string
                     debugPrint(
-                        'onFinishedEditingWithNoSuggestion()  text typed: $text');
+                      'onFinishedEditingWithNoSuggestion()  text typed: $text',
+                    );
                   },
                   buildItem: (Suggestion suggestion, int index) {
                     return Container(
-                        margin: const EdgeInsets.fromLTRB(2, 2, 2,
-                            2), //<<This area will get hoverColor/selectionColor on desktop
-                        padding: const EdgeInsets.all(8),
-                        alignment: Alignment.centerLeft,
-                        color: const Color.fromARGB(255, 220, 220, 220),
-                        child: Text(suggestion.description,
-                            style: const TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold)));
+                      margin: const EdgeInsets.fromLTRB(2, 2, 2, 2), //<<This area will get hoverColor/selectionColor on desktop
+                      padding: const EdgeInsets.all(8),
+                      alignment: Alignment.centerLeft,
+                      color: const Color.fromARGB(255, 220, 220, 220),
+                      child: Text(
+                        suggestion.description,
+                        style: const TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
                   },
                   clearButton: const Icon(Icons.close),
                   componentCountry: 'us',
@@ -265,7 +277,8 @@ class _AddressAutocompleteTextFieldExampleState
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.all(8),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white)),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     hintText: 'Enter city name',
                   ),
                 ),
@@ -279,9 +292,10 @@ class _AddressAutocompleteTextFieldExampleState
                   type: AutoCompleteType.establishment,
                   keyboardType: TextInputType.name,
                   style: const TextStyle(
-                      color: Colors.cyan,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.cyan,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                   // create a `privatekeys.dart` file and add your API key there
                   //   `const GOOGLE_MAPS_ACCOUNT_API_KEY = 'YourGoogleMapsApiKey_XXXXyyyzzzz';`
                   // the .gitignore file is set so this does not go into source repository.
@@ -300,20 +314,24 @@ class _AddressAutocompleteTextFieldExampleState
                     // you should invalidate the last entry of onSuggestionClick if you really need a valid location,
                     // otherwise decide what to do based on what the user typed, can be an empty string
                     debugPrint(
-                        'onFinishedEditingWithNoSuggestion()  text typed: $text');
+                      'onFinishedEditingWithNoSuggestion()  text typed: $text',
+                    );
                   },
                   buildItem: (Suggestion suggestion, int index) {
                     return Container(
-                        margin: const EdgeInsets.fromLTRB(2, 2, 2,
-                            2), //<<This area will get hoverColor/selectionColor on desktop
-                        padding: const EdgeInsets.all(8),
-                        alignment: Alignment.centerLeft,
-                        color: const Color.fromARGB(255, 220, 220, 220),
-                        child: Text(suggestion.description,
-                            style: const TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold)));
+                      margin: const EdgeInsets.fromLTRB(2, 2, 2, 2), //<<This area will get hoverColor/selectionColor on desktop
+                      padding: const EdgeInsets.all(8),
+                      alignment: Alignment.centerLeft,
+                      color: const Color.fromARGB(255, 220, 220, 220),
+                      child: Text(
+                        suggestion.description,
+                        style: const TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
                   },
                   clearButton: const Icon(Icons.close),
                   componentCountry: 'us',
@@ -321,7 +339,8 @@ class _AddressAutocompleteTextFieldExampleState
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.all(8),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white)),
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                     hintText: 'Enter business name',
                   ),
                 ),
@@ -347,29 +366,32 @@ class _AddressAutocompleteTextFieldExampleState
                     // you should invalidate the last entry of onSuggestionClick if you really need a valid location,
                     // otherwise decide what to do based on what the user typed, can be an empty string
                     debugPrint(
-                        'onFinishedEditingWithNoSuggestion()  text typed: $text');
+                      'onFinishedEditingWithNoSuggestion()  text typed: $text',
+                    );
                   },
                   hoverColor: Colors.purple, // for desktop platforms with mouse
                   selectionColor:
                       Colors.red, // for desktop platforms with mouse
                   buildItem: (Suggestion suggestion, int index) {
                     return Container(
-                        margin: const EdgeInsets.fromLTRB(1, 1, 1,
-                            1), //<<This area will get hoverColor/selectionColor on desktop
-                        padding: const EdgeInsets.all(8),
-                        alignment: Alignment.centerLeft,
-                        color: Colors.white,
-                        child: Text(suggestion.description));
+                      margin: const EdgeInsets.fromLTRB(1, 1, 1, 1), //<<This area will get hoverColor/selectionColor on desktop
+                      padding: const EdgeInsets.all(8),
+                      alignment: Alignment.centerLeft,
+                      color: Colors.white,
+                      child: Text(suggestion.description),
+                    );
                   },
                   clearButton: const Icon(Icons.close),
                   componentCountry: 'us',
                   language: 'en-Us',
                   decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.all(8),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white)),
-                      hintText: "Address",
-                      errorText: null),
+                    contentPadding: EdgeInsets.all(8),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    hintText: "Address",
+                    errorText: null,
+                  ),
                 ),
               ),
               /*********/
@@ -384,33 +406,37 @@ class _AddressAutocompleteTextFieldExampleState
                     fontWeight: FontWeight.normal,
                   ),
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            'Suggestion PlaceId: ${_suggestionPlaceId ?? '---'}'),
-                        Text(
-                            'Suggestion Description: ${_suggestionDescription ?? '---'}'),
-                        Text('Name: ${_name ?? '---'}'),
-                        Text('FormattedAddress: ${_formattedAddress ?? '---'}'),
-                        Text(
-                            'FormattedAddressZipPlus4: ${_formattedAddressZipPlus4 ?? '---'}'),
-                        Text('StreetAddress: ${_streetAddress ?? '---'}'),
-                        Text('StreetNumber: ${_streetNumber ?? '---'}'),
-                        Text('Street: ${_street ?? '---'}'),
-                        Text('StreetShort: ${_streetShort ?? '---'}'),
-                        Text('Vicinity: ${_vicinity ?? '---'}'),
-                        Text('City: ${_city ?? '---'}'),
-                        Text('County: ${_county ?? '---'}'),
-                        Text('State: ${_state ?? '---'}'),
-                        Text('StateShort: ${_stateShort ?? '---'}'),
-                        Text('Country: ${_country ?? '---'}'),
-                        Text('ZipCode: ${_zipCode ?? '---'}'),
-                        Text('ZipCodeSuffix: ${_zipCodeSuffix ?? '---'}'),
-                        Text('ZipCodePlus4: ${_zipCodePlus4 ?? '---'}'),
-                        Text('Latitude: ${_lat ?? '---'}'),
-                        Text('Longitude: ${_lng ?? '---'}'),
-                      ]),
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Suggestion PlaceId: ${_suggestionPlaceId ?? '---'}',
+                      ),
+                      Text(
+                        'Suggestion Description: ${_suggestionDescription ?? '---'}',
+                      ),
+                      Text('Name: ${_name ?? '---'}'),
+                      Text('FormattedAddress: ${_formattedAddress ?? '---'}'),
+                      Text(
+                        'FormattedAddressZipPlus4: ${_formattedAddressZipPlus4 ?? '---'}',
+                      ),
+                      Text('StreetAddress: ${_streetAddress ?? '---'}'),
+                      Text('StreetNumber: ${_streetNumber ?? '---'}'),
+                      Text('Street: ${_street ?? '---'}'),
+                      Text('StreetShort: ${_streetShort ?? '---'}'),
+                      Text('Vicinity: ${_vicinity ?? '---'}'),
+                      Text('City: ${_city ?? '---'}'),
+                      Text('County: ${_county ?? '---'}'),
+                      Text('State: ${_state ?? '---'}'),
+                      Text('StateShort: ${_stateShort ?? '---'}'),
+                      Text('Country: ${_country ?? '---'}'),
+                      Text('ZipCode: ${_zipCode ?? '---'}'),
+                      Text('ZipCodeSuffix: ${_zipCodeSuffix ?? '---'}'),
+                      Text('ZipCodePlus4: ${_zipCodePlus4 ?? '---'}'),
+                      Text('Latitude: ${_lat ?? '---'}'),
+                      Text('Longitude: ${_lng ?? '---'}'),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -563,16 +589,11 @@ class _AddressAutocompleteTextFormFieldExampleState
       hintStyle: const TextStyle(color: Colors.grey),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: const BorderSide(
-          color: Colors.purple,
-        ),
+        borderSide: const BorderSide(color: Colors.purple),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: const BorderSide(
-          color: Colors.black12,
-          width: 1.0,
-        ),
+        borderSide: const BorderSide(color: Colors.black12, width: 1.0),
       ),
     );
   }
@@ -602,21 +623,26 @@ class _AddressAutocompleteTextFormFieldExampleState
                     // you should invalidate the last entry of onSuggestionClick if you really need a valid location,
                     // otherwise decide what to do based on what the user typed, can be an empty string
                     debugPrint(
-                        'onFinishedEditingWithNoSuggestion()  text typed: $text');
+                      'onFinishedEditingWithNoSuggestion()  text typed: $text',
+                    );
                   },
                   hoverColor: Colors.purple, // for desktop platforms with mouse
                   selectionColor:
                       Colors.purpleAccent, // for desktop platforms with mouse
                   buildItem: (Suggestion suggestion, int index) {
                     return Container(
-                        margin: const EdgeInsets.fromLTRB(2, 2, 2,
-                            2), //<<This area will get hoverColor/selectionColor on desktop
-                        padding: const EdgeInsets.all(8),
-                        alignment: Alignment.centerLeft,
-                        color: Colors.white,
-                        child: Text(suggestion.description,
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold)));
+                      margin: const EdgeInsets.fromLTRB(2, 2, 2, 2), //<<This area will get hoverColor/selectionColor on desktop
+                      padding: const EdgeInsets.all(8),
+                      alignment: Alignment.centerLeft,
+                      color: Colors.white,
+                      child: Text(
+                        suggestion.description,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
                   },
                   clearButton: const Icon(Icons.close),
                   componentCountry: 'us',
@@ -625,7 +651,8 @@ class _AddressAutocompleteTextFormFieldExampleState
                   // 'normal' TextFormField arguments:
                   autofocus: true,
                   scrollPadding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
                   autovalidateMode: AutovalidateMode.disabled,
                   keyboardType: TextInputType.streetAddress,
                   textCapitalization: TextCapitalization.words,
@@ -637,16 +664,21 @@ class _AddressAutocompleteTextFormFieldExampleState
                     debugPrint('onChanged() for TextFormField got "$newText"');
                   },
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                   decoration: getInputDecoration(
-                      'Start typing address for Autocomplete..'),
+                    'Start typing address for Autocomplete..',
+                  ),
                 ),
                 const LeftAlignedLabelRow('City'),
                 TextFormField(
                   controller: cityTextController,
                   focusNode: cityFocusNode,
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                   decoration: getInputDecoration('New York'),
                   validator: (value) {
                     // validation logic
@@ -658,7 +690,9 @@ class _AddressAutocompleteTextFormFieldExampleState
                   controller: stateTextController,
                   focusNode: stateFocusNode,
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                   decoration: getInputDecoration('NY'),
                   validator: (value) {
                     // validation logic
@@ -670,7 +704,9 @@ class _AddressAutocompleteTextFormFieldExampleState
                   controller: zipTextController,
                   focusNode: zipFocusNode,
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                   decoration: getInputDecoration('10001'),
                   validator: (value) {
                     // validation logic
@@ -691,8 +727,12 @@ class LeftAlignedLabelRow extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
 
-  const LeftAlignedLabelRow(this.label,
-      {this.fontSize = 16.0, this.fontWeight = FontWeight.normal, super.key});
+  const LeftAlignedLabelRow(
+    this.label, {
+    this.fontSize = 16.0,
+    this.fontWeight = FontWeight.normal,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
